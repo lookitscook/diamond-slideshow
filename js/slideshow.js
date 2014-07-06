@@ -5,32 +5,36 @@ $(function(){
     $(document).keyup(function(e){
         //find out which key was pressed
         switch(e.keyCode){
-            case 81: $('body').toggleClass('config'); update();
+            case 81: $('body').toggleClass('config');
         }
     });
   
-   var list_slideshow = $(".slideshow"),
-        listItems = list_slideshow.children('img'),
-        listLen = listItems.length,
-        i = 0,
-        changeList = function () {
-            listItems.eq(i).fadeOut(300, function () {
-                i += 1;
-                if (i === listLen) {
-                    i = 0;
-                }
-                listItems.eq(i).fadeIn(300);
-            });
-        };
-    listItems.not(':first').hide();
-    setInterval(changeList, TIME);
+    $(".slideshow").each(function(){
+        
+        var $i  = $(this).children('img');
+        $i.data('i',0);
+        $i.not(':first').hide();
+        setInterval(function($i) {
+            return function(){
+                var i = parseInt($i.data('i'));
+                $i.eq(i).fadeOut(300, function () {
+                    i += 1;
+                    if (i === $i.length) {i = 0;}
+                    $i.eq(i).fadeIn(300);
+                    $i.data('i',i);
+                });
+            }
+        }($i),TIME);
+    });
+  
+    
   
     $('.corner').draggable({
         drag: function( event, ui ) {
             update();
         }
     });
-  
+
     update();
   
 });
@@ -98,7 +102,6 @@ function transform2d(elt, x1, y1, x2, y2, x3, y3, x4, y4) {
   var w = elt.offsetWidth, h = elt.offsetHeight;
   var t = general2DProjection
     (0, 0, x1, y1, w, 0, x2, y2, 0, h, x3, y3, w, h, x4, y4);
-console.log(x1);
   for(i = 0; i != 9; ++i) t[i] = t[i]/t[8];
   t = [t[0], t[3], 0, t[6],
        t[1], t[4], 0, t[7],
@@ -119,7 +122,6 @@ function update(){
         var $tr = $s.children('.tr.corner');
         var $bl = $s.children('.bl.corner');
         var $br = $s.children('.br.corner');
-        console.log(b);
         transform2d(b,
             $tl.position().left,$tl.position().top,
             $tr.position().left,$tr.position().top,

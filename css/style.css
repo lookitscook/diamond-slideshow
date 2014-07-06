@@ -3,6 +3,9 @@ body{
     color:#fff;
     font-family:sans-serif;
 }
+body.config{
+    background:blue;
+}
 *{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
