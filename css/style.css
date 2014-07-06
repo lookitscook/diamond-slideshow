@@ -19,19 +19,43 @@ body.config{
   width: 100%;
   height: 100%;
   overflow: clip;
-  background:blue;
 }
 .box{
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 1024px;
-  height: 1024px;
+  width: 700px;
+  height: 700px;
   transform-origin: 0 0;
   -webkit-transform-origin: 0 0;
   -moz-transform-origin: 0 0;
   -o-transform-origin: 0 0;
   border:4px solid #000;
+  overflow:hidden;
+  -webkit-box-shadow: inset 0 0 40px #000000;
+  box-shadow: inset 0 0 40px #000000;
+}
+hr{
+    position:absolute;
+    background:red;
+    display:none;
+    visibility:hidden;
+}
+.config hr{
+    display:block;
+    visibility:visible;
+}
+hr.h{
+    left:0;
+    top:50%;
+    height:4px;
+    width:1024px;
+}
+hr.v{
+    left:50%;
+    top:0;
+    width:4px;
+    height:1024px;
 }
 .box img, .box .slideshow{
     position:absolute;
@@ -40,7 +64,15 @@ body.config{
     height:1024px;
     width:1024px;
 }
-
+.box .slideshow{
+    -webkit-transform:rotate(45deg);
+    top:-160px;
+    left:-160px;
+}
+img.mask{
+    height:700px;
+    width:700px;
+}
 .config .box{
   border: 4px solid red;
   background:red;
