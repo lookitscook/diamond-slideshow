@@ -1,6 +1,6 @@
 $(function(){
   
-   var TIME=5000;
+   var TIME=10 * 1000;
 
     $(document).keyup(function(e){
         //find out which key was pressed
@@ -9,22 +9,26 @@ $(function(){
         }
     });
   
-    $(".slideshow").each(function(){
+    $(".slideshow").each(function(i){
         
         var $i  = $(this).children('img');
         $i.data('i',0);
         $i.not(':first').hide();
-        setInterval(function($i) {
+        setTimeout(function($i){
             return function(){
-                var i = parseInt($i.data('i'));
-                $i.eq(i).fadeOut(300, function () {
-                    i += 1;
-                    if (i === $i.length) {i = 0;}
-                    $i.eq(i).fadeIn(300);
-                    $i.data('i',i);
-                });
+                setInterval(function($i) {
+                    return function(){
+                        var i = parseInt($i.data('i'));
+                        $i.eq(i).fadeOut(300, function () {
+                            i += 1;
+                            if (i === $i.length) {i = 0;}
+                            $i.eq(i).fadeIn(300);
+                            $i.data('i',i);
+                        });
+                    }
+                }($i),TIME);
             }
-        }($i),TIME);
+        }($i),i*TIME/3);
     });
   
     
@@ -38,7 +42,6 @@ $(function(){
     update();
   
 });
-
 
 function adj(m) { // Compute the adjugate of m
   return [
