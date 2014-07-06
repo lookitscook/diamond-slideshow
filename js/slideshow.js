@@ -5,7 +5,7 @@ $(function(){
     $(document).keyup(function(e){
         //find out which key was pressed
         switch(e.keyCode){
-            case 81: $('body').toggleClass('config');
+            case 81: $('body').toggleClass('config'); update();
         }
     });
   
@@ -24,6 +24,14 @@ $(function(){
         };
     listItems.not(':first').hide();
     setInterval(changeList, TIME);
+  
+    $('.corner').draggable({
+        drag: function( event, ui ) {
+            update();
+        }
+    });
+  
+    update();
   
 });
 
@@ -90,6 +98,7 @@ function transform2d(elt, x1, y1, x2, y2, x3, y3, x4, y4) {
   var w = elt.offsetWidth, h = elt.offsetHeight;
   var t = general2DProjection
     (0, 0, x1, y1, w, 0, x2, y2, 0, h, x3, y3, w, h, x4, y4);
+console.log(x1);
   for(i = 0; i != 9; ++i) t[i] = t[i]/t[8];
   t = [t[0], t[3], 0, t[6],
        t[1], t[4], 0, t[7],
@@ -102,46 +111,19 @@ function transform2d(elt, x1, y1, x2, y2, x3, y3, x4, y4) {
   elt.style.transform = t;
 }
 
-corners = [100, 100, 300, 100, 100, 300, 300, 300];
-function update() {
-  var box = document.getElementById("box");
-  transform2d(box, corners[0], corners[1], corners[2], corners[3],
-                   corners[4], corners[5], corners[6], corners[7]);
-  for (var i = 0; i != 8; i += 2) {
-    var elt = document.getElementById("marker" + i);
-    elt.style.left = corners[i] + "px";
-    elt.style.top = corners[i + 1] + "px";
-  }
+function update(){
+    $('.set').each(function(){
+        var $s = $(this);
+        var b = $s.children('.box').get(0);
+        var $tl = $s.children('.tl.corner');
+        var $tr = $s.children('.tr.corner');
+        var $bl = $s.children('.bl.corner');
+        var $br = $s.children('.br.corner');
+        console.log(b);
+        transform2d(b,
+            $tl.position().left,$tl.position().top,
+            $tr.position().left,$tr.position().top,
+            $bl.position().left,$bl.position().top,
+            $br.position().left,$br.position().top);
+    });
 }
-function move(evnt) {
-  if (currentcorner < 0) return;
-  corners[currentcorner] = evnt.pageX;
-  corners[currentcorner + 1] = evnt.pageY;
-  update();
-}
-currentcorner = -1;
-window.addEventListener('load', function() {
-  document.documentElement.style.margin="0px";
-  document.documentElement.style.padding="0px";
-  document.body.style.margin="0px";
-  document.body.style.padding="0px";
-  update();
-});
-window.addEventListener('mousedown', function(evnt) {
-  var x = evnt.pageX, y = evnt.pageY, dx, dy;
-  var best = 400; // 20px grab radius
-  currentcorner = -1;
-  for (var i = 0; i != 8; i += 2) {
-    dx = x - corners[i];
-    dy = y - corners[i + 1];
-    if (best > dx*dx + dy*dy) {
-      best = dx*dx + dy*dy;
-      currentcorner = i;
-    }
-  }
-  move(evnt);
-});
-window.addEventListener('mouseup', function(evnt) {
-  currentcorner = -1;
-})
-window.addEventListener('mousemove', move);

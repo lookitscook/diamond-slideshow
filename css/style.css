@@ -18,7 +18,7 @@ body{
   overflow: clip;
   background:blue;
 }
-#box{
+.box{
   position: absolute;
   top: 0px;
   left: 0px;
@@ -30,7 +30,7 @@ body{
   -o-transform-origin: 0 0;
   border:4px solid #000;
 }
-#box img, #box .slideshow{
+.box img, .box .slideshow{
     position:absolute;
     top:0;
     left:0;
@@ -38,11 +38,11 @@ body{
     width:1024px;
 }
 
-.config #box{
+.config .box{
   border: 4px solid red;
   background:red;
 }
-.config #box .slideshow img{
+.config .box .slideshow img{
     opacity:0.5;
 }
 .corner{
@@ -53,15 +53,16 @@ body{
   height:30px;
   width:30px;
   margin:-15px 0 0 -15px;
-  display:none;
   visibility:hidden;
   border-radius:15px;
   border:1px solid red;
   text-align:center;
   line-height:30px;
   font-size:10px;
+  display:block;
+  opacity:0;
 }
 .config .corner{
-    display:block;
+    opacity:1;
     visibility:visible;
 }
