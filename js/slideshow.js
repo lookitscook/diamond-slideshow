@@ -1,6 +1,7 @@
 $(function(){
   
-   var TIME=10 * 1000;
+   var TIME=15 * 1000;
+   var FADE = 500;
 
     $(document).keyup(function(e){
         //find out which key was pressed
@@ -20,10 +21,10 @@ $(function(){
                 setInterval(function($i) {
                     return function(){
                         var i = parseInt($i.data('i'));
-                        $i.eq(i).fadeOut(300, function () {
+                        $i.eq(i).fadeOut(FADE, function () {
                             i += 1;
                             if (i === $i.length) {i = 0;}
-                            $i.eq(i).fadeIn(300);
+                            $i.eq(i).fadeIn(FADE);
                             $i.data('i',i);
                         });
                     }
