@@ -2,6 +2,7 @@ body{
     background:#000;
     color:#fff;
     font-family:sans-serif;
+   overflow:hidden;
 }
 body.config{
     background:blue;

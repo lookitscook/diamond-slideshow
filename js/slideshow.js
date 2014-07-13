@@ -11,6 +11,8 @@ $(function(){
         }
     });
   
+  
+  
     $(".slideshow").each(function(i){
         
         var $i  = $(this).children('img');
