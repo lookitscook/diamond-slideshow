@@ -5,7 +5,8 @@ $(function(){
     $(document).keyup(function(e){
         //find out which key was pressed
         switch(e.keyCode){
-            case 81: $('body').toggleClass('config');
+            case 81: 
+                $('body').toggleClass('config');
         }
     });
   
@@ -28,10 +29,8 @@ $(function(){
                     }
                 }($i),TIME);
             }
-        }($i),i*TIME/3);
+        }($i),i*TIME/$(".slideshow").length);
     });
-  
-    
   
     $('.corner').draggable({
         drag: function( event, ui ) {
